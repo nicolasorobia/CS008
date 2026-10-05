@@ -1,0 +1,3 @@
+C:/Users/Nicolas Orobia/Documents/FALL2026_PCC/CS008/Hangman/build/CMakeFiles/main.dir
+C:/Users/Nicolas Orobia/Documents/FALL2026_PCC/CS008/Hangman/build/CMakeFiles/edit_cache.dir
+C:/Users/Nicolas Orobia/Documents/FALL2026_PCC/CS008/Hangman/build/CMakeFiles/rebuild_cache.dir

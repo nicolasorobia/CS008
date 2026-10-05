@@ -1,0 +1,52 @@
+template linked list main.cpp implementation calls
+
+#include <iostream>
+#include "linkedlist.h"
+
+int main()
+{
+    LinkedList<int> a;
+    // check size
+    std::cout << a.size() << "\n"; 
+    std::cout << std::boolalpha;
+    // check if empty
+    std::cout << a.empty() << "\n";;
+
+    // insert an item at the end of the list:
+    a.push_back(10);
+    a.push_back(20);
+    // a = [10, 20]
+    std::cout << "a = " << a << "\n";
+    // should now print 2
+    std::cout << a.size() << "\n";
+    
+    // insert an item at the beginning of the list:
+    LinkedList<int> b { 1, 2, 3, 4 };
+    std::cout << "b = " << b << "\n"; // b = [1, 2, 3, 4]
+    b.push_front(25);
+    std::cout << "b = " << b << "\n"; // b = [25, 1, 2, 3, 4]
+    std::cout << "b's front = " << b.front() << "\n";
+    std::cout << "b's back  = " << b.back()  << "\n";
+
+    // copy the values of a list to an already existing list
+    a = b;
+    std::cout << "a = " << a << "\n"; // a = [25, 1, 2, 3, 4]
+
+    a.insertBefore(2, 67);
+    std::cout << "a = " << a << "\n"; // a = [25, 1, 67, 2, 3, 4]
+    a.insertAfter(25, 76);
+    std::cout << "a = " << a << "\n"; // a = [25, 76, 1, 67, 2, 3, 4]
+
+    if (a.findNode(35)) std::cout << "35 found in a\n";
+    else                std::cout << "35 not found in a\n";
+
+    a.pop_front();
+    std::cout << "a = " << a << "\n"; // a = [76, 1, 67, 2, 3, 4]
+    a.pop_back();
+    std::cout << "a = " << a << "\n"; // a = [76, 1, 67, 2, 3]
+    a.clear();
+    std::cout << "a = " << a << "\n"; // a = []
+
+
+    return 0;
+}

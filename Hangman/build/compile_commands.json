@@ -1,0 +1,26 @@
+[
+{
+  "directory": "C:/Users/Nicolas Orobia/Documents/FALL2026_PCC/CS008/Hangman/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe   -g -o CMakeFiles\\main.dir\\main.cpp.obj -c \"C:\\Users\\Nicolas Orobia\\Documents\\FALL2026_PCC\\CS008\\Hangman\\main.cpp\"",
+  "file": "C:/Users/Nicolas Orobia/Documents/FALL2026_PCC/CS008/Hangman/main.cpp",
+  "output": "CMakeFiles/main.dir/main.cpp.obj"
+},
+{
+  "directory": "C:/Users/Nicolas Orobia/Documents/FALL2026_PCC/CS008/Hangman/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe   -g -o CMakeFiles\\main.dir\\gamelogic.cpp.obj -c \"C:\\Users\\Nicolas Orobia\\Documents\\FALL2026_PCC\\CS008\\Hangman\\gamelogic.cpp\"",
+  "file": "C:/Users/Nicolas Orobia/Documents/FALL2026_PCC/CS008/Hangman/gamelogic.cpp",
+  "output": "CMakeFiles/main.dir/gamelogic.cpp.obj"
+},
+{
+  "directory": "C:/Users/Nicolas Orobia/Documents/FALL2026_PCC/CS008/Hangman/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe   -g -o CMakeFiles\\main.dir\\board.cpp.obj -c \"C:\\Users\\Nicolas Orobia\\Documents\\FALL2026_PCC\\CS008\\Hangman\\board.cpp\"",
+  "file": "C:/Users/Nicolas Orobia/Documents/FALL2026_PCC/CS008/Hangman/board.cpp",
+  "output": "CMakeFiles/main.dir/board.cpp.obj"
+},
+{
+  "directory": "C:/Users/Nicolas Orobia/Documents/FALL2026_PCC/CS008/Hangman/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe   -g -o CMakeFiles\\main.dir\\player.cpp.obj -c \"C:\\Users\\Nicolas Orobia\\Documents\\FALL2026_PCC\\CS008\\Hangman\\player.cpp\"",
+  "file": "C:/Users/Nicolas Orobia/Documents/FALL2026_PCC/CS008/Hangman/player.cpp",
+  "output": "CMakeFiles/main.dir/player.cpp.obj"
+}
+]
