@@ -19,7 +19,7 @@ int main()
 
     BSTree<int> copy = tree;
     copy.push(777);
-    tree.pop(100);
+    tree.remove(100);
 
     std::cout << "original: "; tree.inorder(print); std::cout << "\n";
     std::cout << "copy:     "; copy.inorder(print); std::cout << "\n";

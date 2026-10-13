@@ -21,44 +21,54 @@ void BSTree<T>::_push(Node<T>*& node, const T& data)
 
 // helper node for _pop
 template<typename T>
-Node<T>* findMin(Node<T>* node)
+Node<T>* findPredecessor(Node<T>* node)
 {
-    while (node->left != nullptr) {
-        node = node->left;
-    }
+    // iterative
+    // while (node->right != nullptr) {
+    //     node = node->right;
+    // }
 
-    return node;
+    // return node;
+
+    if (node->right == nullptr) return node;
+
+    return findPredecessor(node->right);
 }
 
 template<typename T>
-Node<T>* BSTree<T>::_pop(Node<T>* node, const T& data)
+Node<T>* BSTree<T>::_remove(Node<T>*& node, const T& data)
 {
     // not found - do nothing
     if (node == nullptr) return nullptr;
 
     if (data < node->data)
-        node->left = _pop(node->left, data);
+        _remove(node->left, data);
     else if (data > node->data)
-        node->right = _pop(node->right, data);
+        _remove(node->right, data);
     else
-    {
+    {   
+        // node only has a right child
         if (node->left == nullptr) {
             Node<T>* temp = node->right;
             delete node;
+            node = temp;
             --_size;
-            return temp;
+            return node;
         }
 
+        // node only has a left child
         if (node->right == nullptr) {
             Node<T>* temp = node->left;
             delete node;
+            node = temp;
             --_size;
-            return temp;
+            return node;
         }
 
-        Node<T>* temp = findMin(node->right);
+        // node has two childs
+        Node<T>* temp = findPredecessor(node->left);
         node->data = temp->data;
-        node->right = _pop(node->right, temp->data);
+        _remove(node->left, temp->data);
     }
 
     return node;
@@ -140,6 +150,5 @@ BSTree<T>& BSTree<T>::operator=(const BSTree<T>& tree)
 
     return *this;
 }
-
 
 #endif

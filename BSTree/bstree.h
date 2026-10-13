@@ -9,21 +9,22 @@ private:
     Node<T> *root = nullptr;
     int _size = 0;
 
-    void     _push    (Node<T>*& node, const T& data);
-    Node<T>* _pop     (Node<T>*  node, const T& data);
-    void     _clear   (Node<T>*  node);
+    void     _push    (Node<T> *&node, const T& data);
+    Node<T>* _remove  (Node<T> *&node, const T& data);
+    void     _clear   (Node<T>  *node);
 
-    void _preorder    (Node<T> *node, void(*f)(T&));
-    void _inorder     (Node<T> *node, void(*f)(T&));
-    void _postorder   (Node<T> *node, void(*f)(T&));
+    void _preorder    (Node<T>  *node, void(*f)(T&));
+    void _inorder     (Node<T>  *node, void(*f)(T&));
+    void _postorder   (Node<T>  *node, void(*f)(T&));
 
-    Node<T>* _copy    (Node<T>* node);
+    Node<T>* _copy    (Node<T>  *node);
 
 public:
     BSTree() = default;
 
-    void push(const T& value) { _push(root, value); }
-    void pop (const T& value) { root = _pop(root, value); }
+    void push   (const T& value) { _push(root, value); }
+    void remove (const T& value) { root = _remove(root, value); }
+
     void clear() {
         _clear(root);
         root = nullptr;
