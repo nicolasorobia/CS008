@@ -30,9 +30,12 @@ public:
 
     void   start();                         // begin a round at the root
     Result answer(bool yes);                
-    void   learn(const std::string& thing,  
-                 const std::string& question,
-                 bool yesForThing);
+    void   learn
+    (
+        const std::string& thing,  
+        const std::string& question,
+        bool yesForThing
+    );
 
     const std::string& prompt() const;      // current question, or the guess at a leaf
     bool isGuessing() const;                // true when current is a leaf

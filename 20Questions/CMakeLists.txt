@@ -25,7 +25,8 @@ add_executable(20_questions
 target_link_libraries(20_questions PRIVATE raylib)
 
 # Copy assets next to the built executable after every build
-# add_custom_command(TARGET 20_questions POST_BUILD
-#     COMMAND ${CMAKE_COMMAND} -E copy_directory
-#         ${CMAKE_SOURCE_DIR}/assets
-#         $<TARGET_FILE_DIR:20_questions>/assets)
+add_custom_target(copy_assets ALL
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/assets
+        $<TARGET_FILE_DIR:20_questions>/assets)
+add_dependencies(20_questions copy_assets)

@@ -7,11 +7,11 @@
 const int SCREEN_W = 800;
 const int SCREEN_H = 500;
 
-const Color INK        = {  33,  37,  52, 255 };
-const Color MUTED      = { 110, 108, 104, 255 };
+const Color INK        = BLACK;
+const Color MUTED      = GRAY;
 const Color ACCENT     = {  52,  98, 165, 255 };
-const Color YES_GREEN  = {  46, 125,  80, 255 };
-const Color NO_RED     = { 176,  58,  46, 255 };
+const Color YES_GREEN  = GREEN;
+const Color NO_RED     = RED;
 
 // Which screen is showing. Each frame draws exactly one of these.
 enum class Screen {
@@ -25,13 +25,15 @@ enum class Screen {
     Stumped         // ran out of questions
 };
 
-// ===================== small widgets =====================
+// ===================== widgets =====================
 
 Color Lighter(Color c)
 {
-    return Color{ (unsigned char)(c.r + (255 - c.r) / 5),
-                  (unsigned char)(c.g + (255 - c.g) / 5),
-                  (unsigned char)(c.b + (255 - c.b) / 5), 255 };
+    return Color { 
+        (unsigned char)(c.r + (255 - c.r) / 5),
+        (unsigned char)(c.g + (255 - c.g) / 5),
+        (unsigned char)(c.b + (255 - c.b) / 5), 255
+    };
 }
 
 // Draws a button and returns true on the frame it is clicked.
@@ -114,7 +116,7 @@ const Rectangle RIGHT_BUTTON = { 420, 330, 190, 64 };
 
 int main()
 {
-    InitWindow(SCREEN_W, SCREEN_H, "Dave has some questions");
+    InitWindow(SCREEN_W, SCREEN_H, "Dave's 20 Questions - The Game");
     SetTargetFPS(60);
     SetExitKey(KEY_NULL);           // Esc won't close the window while typing; use Quit
 
@@ -126,16 +128,29 @@ int main()
     std::string lastGuess, thing, question;
     bool quit = false;
 
+    // Audio
+    InitAudioDevice();
+    std::string audioPath = std::string(GetApplicationDirectory()) + "assets/wiimusic.ogg";
+    Music music = LoadMusicStream(audioPath.c_str());
+    music.looping = true;
+
+    if (IsMusicValid(music)) {
+        StopMusicStream(music);
+        PlayMusicStream(music);
+    }
+
     while (!quit && !WindowShouldClose())
     {
         BeginDrawing();
         ClearBackground(SKYBLUE);
 
+        UpdateMusicStream(music);
+
         switch (screen)
         {
         case Screen::Title:
             DrawCenteredText("Dave has some questions", 120, 52, INK);
-            DrawCenteredText("Think of an animal. Dave will try to guess it.", 200, 24, MUTED);
+            DrawCenteredText("Think of an animal. Dave will try to guess it.", 200, 30, MUTED);
 
             if (Button({ 300, 270, 200, 64 }, "Start", ACCENT)) {
                 dave.start();
