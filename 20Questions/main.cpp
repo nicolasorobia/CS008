@@ -7,13 +7,7 @@
 const int SCREEN_W = 800;
 const int SCREEN_H = 500;
 
-const Color INK        = BLACK;
-const Color MUTED      = GRAY;
-const Color ACCENT     = {  52,  98, 165, 255 };
-const Color YES_GREEN  = GREEN;
-const Color NO_RED     = RED;
-
-// Which screen is showing. Each frame draws exactly one of these.
+// Which screen is showing
 enum class Screen {
     Title,          // "Dave has some questions"  [Start] [Quit]
     Asking,         // a question or a guess      [Yes]   [No]
@@ -25,8 +19,9 @@ enum class Screen {
     Stumped         // ran out of questions
 };
 
-// ===================== widgets =====================
+// ===================== GUI (button, textbox, input, game juice) =====================
 
+// fades button color to show mouse is hovering over it
 Color Lighter(Color c)
 {
     return Color { 
@@ -90,7 +85,7 @@ bool TextBox(Rectangle box, std::string& text, size_t maxLength = 60)
         text.pop_back();
 
     DrawRectangleRounded(box, 0.2f, 8, RAYWHITE);
-    DrawRectangleRoundedLinesEx(box, 0.2f, 8, 2.0f, ACCENT);
+    DrawRectangleRoundedLinesEx(box, 0.2f, 8, 2.0f, DARKBLUE);
 
     // If the text is wider than the box, show only its end.
     const int fontSize = 26;
@@ -100,10 +95,10 @@ bool TextBox(Rectangle box, std::string& text, size_t maxLength = 60)
 
     int textX = (int)box.x + 14;
     int textY = (int)(box.y + (box.height - fontSize) / 2);
-    DrawText(shown.c_str(), textX, textY, fontSize, INK);
+    DrawText(shown.c_str(), textX, textY, fontSize, BLACK);
 
     if ((int)(GetTime() * 2) % 2 == 0)                       // blinking cursor
-        DrawRectangle(textX + MeasureText(shown.c_str(), fontSize) + 3, textY, 2, fontSize, INK);
+        DrawRectangle(textX + MeasureText(shown.c_str(), fontSize) + 3, textY, 2, fontSize, BLACK);
 
     return IsKeyPressed(KEY_ENTER) && !text.empty();
 }
@@ -149,30 +144,31 @@ int main()
         switch (screen)
         {
         case Screen::Title:
-            DrawCenteredText("Dave has some questions", 120, 52, INK);
-            DrawCenteredText("Think of an animal. Dave will try to guess it.", 200, 30, MUTED);
+            DrawCenteredText("Dave has some questions", 120, 52, BLACK);
+            DrawCenteredText("Think of an animal. Dave will try to guess it.", 200, 30, GRAY);
 
-            if (Button({ 300, 270, 200, 64 }, "Start", ACCENT)) {
+            if (Button({ 300, 270, 200, 64 }, "Start", DARKBLUE)) {
                 dave.start();
                 screen = Screen::Asking;
             }
-            if (Button({ 300, 352, 200, 64 }, "Quit", MUTED))
+            if (Button({ 300, 352, 200, 64 }, "Quit", GRAY))
                 quit = true;
             break;
 
         case Screen::Asking: {
+            // Keeps counter of questions asked in top left corner
             std::string count = "Question " + std::to_string(dave.questionsAsked() + 1)
                               + " of " + std::to_string(TwentyQuestions::MAX_QUESTIONS);
-            DrawText(count.c_str(), 30, 26, 22, MUTED);
+            DrawText(count.c_str(), 30, 26, 22, GRAY);
 
             std::string text = dave.isGuessing() ? "Is it " + dave.prompt() + "?"
                                                  : dave.prompt();
             DrawCenteredText(dave.isGuessing() ? "Dave thinks he knows..." : "Dave asks:",
-                             120, 24, MUTED);
-            DrawCenteredText(text, 170, 40, INK);
+                             120, 24, GRAY);
+            DrawCenteredText(text, 170, 40, BLACK);
 
-            bool yes = Button(LEFT_BUTTON,  "Yes", YES_GREEN);
-            bool no  = Button(RIGHT_BUTTON, "No",  NO_RED);
+            bool yes = Button(LEFT_BUTTON,  "Yes", GREEN);
+            bool no  = Button(RIGHT_BUTTON, "No",  RED);
 
             if (yes || no) {
                 lastGuess = dave.prompt();               // only used if this was a wrong guess
@@ -199,29 +195,29 @@ int main()
         case Screen::Correct: {
             std::string msg = "Dave got it in " + std::to_string(dave.questionsAsked())
                             + " questions!";
-            DrawCenteredText(msg, 170, 40, INK);
+            DrawCenteredText(msg, 170, 40, BLACK);
 
-            if (Button(LEFT_BUTTON,  "Play again", ACCENT)) { dave.start(); screen = Screen::Asking; }
-            if (Button(RIGHT_BUTTON, "Menu",       MUTED)) screen = Screen::Title;
+            if (Button(LEFT_BUTTON,  "Play again", DARKBLUE)) { dave.start(); screen = Screen::Asking; }
+            if (Button(RIGHT_BUTTON, "Menu",       GRAY)) screen = Screen::Title;
             break;
         }
 
         case Screen::AskThing:
-            DrawCenteredText("Dave gives up! What were you thinking of?", 110, 30, INK);
-            DrawCenteredText("for example: a tiger", 160, 22, MUTED);
+            DrawCenteredText("Dave gives up! What were you thinking of?", 110, 30, BLACK);
+            DrawCenteredText("for example: a tiger", 160, 22, GRAY);
 
             if (TextBox({ 150, 220, 500, 60 }, thing) ||
-                (Button({ 300, 330, 200, 64 }, "Next", ACCENT) && !thing.empty()))
+                (Button({ 300, 330, 200, 64 }, "Next", DARKBLUE) && !thing.empty()))
                 screen = Screen::AskQuestion;
             break;
 
         case Screen::AskQuestion: {
             std::string msg = "Type a yes/no question that tells " + thing
                             + " apart from " + lastGuess + ".";
-            DrawCenteredText(msg, 100, 28, INK);
+            DrawCenteredText(msg, 100, 28, BLACK);
 
             if (TextBox({ 100, 220, 600, 60 }, question) ||
-                (Button({ 300, 330, 200, 64 }, "Next", ACCENT) && !question.empty())) {
+                (Button({ 300, 330, 200, 64 }, "Next", DARKBLUE) && !question.empty())) {
                 if (question.back() != '?') question += '?';
                 screen = Screen::AskSide;
             }
@@ -229,11 +225,11 @@ int main()
         }
 
         case Screen::AskSide: {
-            int y = DrawCenteredText("For " + thing + ", what's the answer to:", 110, 28, MUTED);
-            DrawCenteredText(question, y + 10, 34, INK);
+            int y = DrawCenteredText("For " + thing + ", what's the answer to:", 110, 28, GRAY);
+            DrawCenteredText(question, y + 10, 34, BLACK);
 
-            bool yes = Button(LEFT_BUTTON,  "Yes", YES_GREEN);
-            bool no  = Button(RIGHT_BUTTON, "No",  NO_RED);
+            bool yes = Button(LEFT_BUTTON,  "Yes", GREEN);
+            bool no  = Button(RIGHT_BUTTON, "No",  RED);
 
             if (yes || no) {
                 dave.learn(thing, question, yes);
@@ -244,17 +240,17 @@ int main()
         }
 
         case Screen::Learned:
-            DrawCenteredText("Thanks! Dave will remember " + thing + ".", 170, 36, INK);
+            DrawCenteredText("Thanks! Dave will remember " + thing + ".", 170, 36, BLACK);
 
-            if (Button(LEFT_BUTTON,  "Play again", ACCENT)) { dave.start(); screen = Screen::Asking; }
-            if (Button(RIGHT_BUTTON, "Menu",       MUTED)) screen = Screen::Title;
+            if (Button(LEFT_BUTTON,  "Play again", DARKBLUE)) { dave.start(); screen = Screen::Asking; }
+            if (Button(RIGHT_BUTTON, "Menu",       GRAY)) screen = Screen::Title;
             break;
 
         case Screen::Stumped:
-            DrawCenteredText("20 questions and Dave is stumped. You win!", 170, 36, INK);
+            DrawCenteredText("20 questions and Dave is stumped. You win!", 170, 36, BLACK);
 
-            if (Button(LEFT_BUTTON,  "Play again", ACCENT)) { dave.start(); screen = Screen::Asking; }
-            if (Button(RIGHT_BUTTON, "Menu",       MUTED)) screen = Screen::Title;
+            if (Button(LEFT_BUTTON,  "Play again", DARKBLUE)) { dave.start(); screen = Screen::Asking; }
+            if (Button(RIGHT_BUTTON, "Menu",       GRAY)) screen = Screen::Title;
             break;
         }
 
