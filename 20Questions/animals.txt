@@ -1,0 +1,9 @@
+Q:Does it live in the water?
+Q:Is it a mammal?
+A:a dolphin
+A:a shark
+Q:Can it fly?
+Q:Does it eat other animals?
+A:an eagle
+A:a fly
+A:a dog
