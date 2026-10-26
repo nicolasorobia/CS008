@@ -17,6 +17,9 @@ int main()
 {
     AVL<int> tree;
     for (int v: {10, 20, 30, 40, 50, 25}) tree.push(v);
+
+    // *refer to PDF Drawing for AVL traversal verification
+
     printAllOrders(tree);
 
     std::cout << "\nPass lambda function (double each node) to traversal:\n";
