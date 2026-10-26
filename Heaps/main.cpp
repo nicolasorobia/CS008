@@ -2,18 +2,30 @@
 
 int main()
 {
-    auto comparator = [](int a, int b)
-    {
-        return a > b;
-    };
+    // initializer-list constructor
+    Heap<int> heap{30, 10, 50, 20, 40};
+    std::cout << "heap: "; heap.printLevelOrder();
+    std::cout << "size: " << heap.size() << '\n';
+    std::cout << "top:  " << heap.top() << '\n';
 
-    Heap<int, decltype(comparator)> heap = {1, 2, 3, 4, 5};
+    heap.push(999);
+    std::cout <<"\nAfter pushing 999, should be on top\n";
+    std::cout << "heap: "; heap.printLevelOrder();
+    std::cout << "top:  " << heap.top() << '\n';
 
-    heap.push(8);
-    heap.push(9);
     heap.pop();
+    std::cout <<"\nAfter popping 999, back to original\n";
+    std::cout << "heap: "; heap.printLevelOrder();
+    std::cout << "top:  " << heap.top() << '\n';
 
-    
+    std::cout <<"\nPop everything & check if it's empty\n";
+    while (!heap.empty())
+    {
+        std::cout << heap.top() << " and size: " << heap.size() << '\n';
+        heap.pop();
+    }
+    std::cout << "size: " << heap.size() << '\n';
+    std::cout << "Is it empty: " << std::boolalpha << heap.empty() << '\n';
 
 
     return 0;
