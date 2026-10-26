@@ -49,6 +49,7 @@ TwentyQuestions::Result TwentyQuestions::answer(bool yes)
     current = yes ? current->left : current->right;        // that was a question
 
     if (asked >= MAX_QUESTIONS) return Result::OutOfQuestions;
+    
     return Result::NextQuestion;
 }
 
